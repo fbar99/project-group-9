@@ -26,6 +26,16 @@ export default {
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
             <li>
+              <router-link to="login">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >login</span
+                >
+                Login
+              </router-link>
+            </li>
+            <li>
               <router-link to="/">
                 <span
                   style="position: relative; top: 6px"
@@ -36,6 +46,7 @@ export default {
               </router-link>
             </li>
             <li>
+              <!-- v-if="isEditor" -->
               <router-link to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
@@ -46,6 +57,7 @@ export default {
               </router-link>
             </li>
             <li>
+              <!-- v-if="isEditor" -->
               <router-link to="/eventform">
                 <span
                   style="position: relative; top: 6px"
@@ -56,6 +68,7 @@ export default {
               </router-link>
             </li>
             <li>
+              <!-- v-if="isEditor || isViewer" -->
               <router-link to="/findclient">
                 <span
                   style="position: relative; top: 6px"
@@ -66,6 +79,7 @@ export default {
               </router-link>
             </li>
             <li>
+              <!-- v-if="isEditor || isViewer" -->
               <router-link to="/findevents">
                 <span
                   style="position: relative; top: 6px"

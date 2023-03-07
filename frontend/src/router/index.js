@@ -7,6 +7,12 @@ const routes = [
     props: true,
     component: () => import('../components/homePage.vue')
   },
+  // {
+  //   path: '/login',
+  //   name: 'login',
+  //   props: true,
+  //   component: () => import('../components/login.vue')
+  // },
   {
     path: '/intakeform',
     name: 'intakeform',
