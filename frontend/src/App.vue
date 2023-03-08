@@ -1,3 +1,4 @@
+<!-- Project FrontEnd Group 9 Application -->
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
@@ -15,7 +16,7 @@ export default {
     })
   }
 }
-</script>
+</script> <!-- Main -->
 <template>
   <main class="flex flex-row">
     <div id="_container" class="h-screen">
@@ -32,7 +33,7 @@ export default {
                   class="material-icons"
                   >login</span
                 >
-                Sign in
+                User Sign-In <!-- Sign In Tab -->
               </router-link>
             </li>
             <li>
@@ -42,7 +43,7 @@ export default {
                   class="material-icons"
                   >dashboard</span
                 >
-                Dashboard
+                Dashboard <!-- Dashboard Tab -->
               </router-link>
             </li>
             <li>
@@ -53,7 +54,7 @@ export default {
                   class="material-icons"
                   >people</span
                 >
-                Client Intake Form
+                Client Intake Form <!-- Client Intake Tab -->
               </router-link>
             </li>
             <li>
@@ -64,7 +65,7 @@ export default {
                   class="material-icons"
                   >event</span
                 >
-                Create Event
+                Create Event <!-- Create Event Tab -->
               </router-link>
             </li>
             <li>
@@ -75,7 +76,7 @@ export default {
                   class="material-icons"
                   >content_paste</span
                 >
-                Create Service
+                Create Service <!-- Create Service Tab -->
               </router-link>
             </li>
             <li>
@@ -86,7 +87,7 @@ export default {
                   class="material-icons"
                   >search</span
                 >
-                Find Client
+                Find Client <!-- Find Client Tab -->
               </router-link>
             </li>
             <li>
@@ -97,7 +98,7 @@ export default {
                   class="material-icons"
                   >search</span
                 >
-                Find Event
+                Find Event <!-- Find Event Tab -->
               </router-link>
             </li>
             <li>
@@ -108,7 +109,7 @@ export default {
                   class="material-icons"
                   >search</span
                 >
-                Find Service
+                Find Service  <!-- Find Service Tab -->
               </router-link>
             </li>
           </ul>
