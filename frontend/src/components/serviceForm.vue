@@ -14,7 +14,8 @@ export default {
       service: {
         name: '',
         status: '',
-        description: ''
+        description: '',
+        services: ''
       }
     }
   },
@@ -92,14 +93,15 @@ export default {
             <label class="block">
               <span class="text-gray-700">Status</span>
               <span style="color: #ff0000">*</span>
+          </label>
               <select
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-            v-model="searchBy"
+            v-model="service.status"
           >
             <option value="Service Active">Active</option>
             <option value="Service Not Active">Not Active</option>
           </select>
-              <span class="text-black" v-if="v$.service.name.$error">
+              <span class="text-black" v-if="v$.service.status.$error">
                 <p
                   class="text-red-700"
                   v-for="error of v$.service.name.$errors"
@@ -108,7 +110,7 @@ export default {
                   {{ error.$message }}!
                 </p>
               </span>
-            </label>
+            <!-- </label> -->
           </div>
 
           <div></div>

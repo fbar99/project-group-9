@@ -32,7 +32,7 @@
     },
     "rules": {
       "prettier/prettier": [
-        "none",
+        "error",
         {
           "singleQuote": true,
           "semi": false,
