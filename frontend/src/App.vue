@@ -32,7 +32,7 @@ export default {
                   class="material-icons"
                   >login</span
                 >
-                Login
+                Sign in
               </router-link>
             </li>
             <li>
