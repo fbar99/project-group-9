@@ -68,6 +68,17 @@ export default {
               </router-link>
             </li>
             <li>
+              <!-- v-if="isEditor" -->
+              <router-link to="/serviceform">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >content_paste</span
+                >
+                Create Service
+              </router-link>
+            </li>
+            <li>
               <!-- v-if="isEditor || isViewer" -->
               <router-link to="/findclient">
                 <span
@@ -87,6 +98,17 @@ export default {
                   >search</span
                 >
                 Find Event
+              </router-link>
+            </li>
+            <li>
+              <!-- v-if="isEditor || isViewer" -->
+              <router-link to="/findservices">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >search</span
+                >
+                Find Service
               </router-link>
             </li>
           </ul>
