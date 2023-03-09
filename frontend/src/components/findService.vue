@@ -19,9 +19,9 @@ export default {
     handleSubmitForm() {
       let endpoint = ''
       if (this.searchBy === 'Service Name') {
-        endpoint = `services/search/?name=${this.name}`
+        endpoint = `services/search/?name=${this.name}&searchBy=name`
       } else if (this.searchBy === 'Service Status') {
-        endpoint = `services/search/?status=${this.status}`
+        endpoint = `services/search/?status=${this.status}&searchBy=name`
       }
       axios.get(`${apiURL}/${endpoint}`).then((res) => {
         this.queryData = res.data
@@ -79,7 +79,7 @@ export default {
             <input
               type="text"
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              v-model="serviceName"
+              v-model="name"
               v-on:keyup.enter="handleSubmitForm"
               placeholder="Enter name"
             />
@@ -91,7 +91,7 @@ export default {
           <input
             class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             type="text"
-            v-model="serviceStatus"
+            v-model="status"
             v-on:keyup.enter="handleSubmitForm"
             placeholder="Enter service status"
           />

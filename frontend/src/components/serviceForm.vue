@@ -11,31 +11,76 @@ export default {
   data() {
     return {
       // removed unnecessary extra array to track services
+      org: '',
       service: {
         name: '',
         status: '',
-        description: '',
-        services: ''
+        description: ''
       }
     }
   },
+  created() {
+    axios.get(`${apiURL}/org`).then((res) => {
+      this.org = res.data._id
+      console.log(this.org)
+    })
+  },
+  mounted() {
+    window.scrollTo(0, 0)
+  },
   methods: {
-    async handleSubmitForm() {
-      // Checks to see if there are any errors in validation
-      const isFormCorrect = await this.v$.$validate()
-      // If no errors found. isFormCorrect = True then the form is submitted
-      if (isFormCorrect) {
-        axios
-          .post(`${apiURL}/services`, this.service)
-          .then(() => {
-            alert('Service has been added.')
-            this.$router.push({ name: 'findservices' })
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      }
+    registerService() {
+      this.v$.$validate().then((valid) => {
+        if (valid) {
+          axios
+            .get(`${apiURL}/services/lookup/${this.service.name}`)
+            .then((res) => {
+              if (res.data) {
+                if (res.data.orgs.includes(this.org)) {
+                  alert('Service has already been registered.')
+                  this.$router.push({ name: 'findservices' })
+                } else {
+                  axios
+                    .put(`${apiURL}/services/register/${res.data._id}`)
+                    .then(() => {
+                      alert('Service registered')
+                      this.$router.push({ name: 'findservices' })
+                    })
+                    .catch((error) => {
+                      console.log(error)
+                    })
+                }
+              } else {
+                axios
+                  .post(`${apiURL}/services`, this.service)
+                  .then(() => {
+                    alert('Service added')
+                    this.$router.push({ name: 'findservices' })
+                  })
+                  .catch((error) => {
+                    console.log(error)
+                  })
+              }
+            })
+        }
+      })
     }
+    // async handleSubmitForm() {
+    //   // Checks to see if there are any errors in validation
+    //   const isFormCorrect = await this.v$.$validate()
+    //   // If no errors found. isFormCorrect = True then the form is submitted
+    //   if (isFormCorrect) {
+    //     axios
+    //       .post(`${apiURL}/services`, this.service)
+    //       .then(() => {
+    //         alert('Service has been added.')
+    //         this.$router.push({ name: 'findservices' })
+    //       })
+    //       .catch((error) => {
+    //         console.log(error)
+    //       })
+    //   }
+    // }
   },
   // sets validations for the various data properties
   validations() {
@@ -59,7 +104,8 @@ export default {
     </div>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit event from reloading the page-->
-      <form @submit.prevent="handleSubmitForm">
+      <!-- <form @submit.prevent="handleSubmitForm"> -->
+        <form @submit.prevent="registerService">
         <!-- grid container -->
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
@@ -121,7 +167,7 @@ export default {
               <span class="text-gray-700">Description</span>
               <textarea
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                rows="2"
+                rows="3"
               ></textarea>
             </label>
           </div>
@@ -129,62 +175,7 @@ export default {
           <div></div>
           <div></div>
           <div></div>
-          <!-- form field -->
-          <div class="flex flex-col grid-cols-3">
-            <label>List of Services</label>
-            <div>
-              <label for="familySupport" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="familySupport"
-                  value="Family Support"
-                  v-model="service.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Family Support</span>
-              </label>
-            </div>
-            <div>
-              <label for="adultEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="adultEducation"
-                  value="Adult Education"
-                  v-model="service.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Adult Education</span>
-              </label>
-            </div>
-            <div>
-              <label for="youthServices" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="youthServices"
-                  value="Youth Services Program"
-                  v-model="service.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Youth Services Program</span>
-              </label>
-            </div>
-            <div>
-              <label for="childhoodEducation" class="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  id="childhoodEducation"
-                  value="Early Childhood Education"
-                  v-model="service.services"
-                  class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
-                  notchecked
-                />
-                <span class="ml-2">Early Childhood Education</span>
-              </label>
-            </div>
-          </div>
+
         </div>
 
 
