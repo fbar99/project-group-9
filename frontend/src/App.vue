@@ -16,7 +16,8 @@ export default {
     })
   }
 }
-</script> <!-- Main -->
+</script> 
+<!-- Main -->
 <template>
   <main class="flex flex-row">
     <div id="_container" class="h-screen">
@@ -33,7 +34,7 @@ export default {
                   class="material-icons"
                   >login</span
                 >
-                User Sign-In <!-- Sign In Tab -->
+                User Log-In <!-- Sign In Tab -->
               </router-link>
             </li>
             <li>
