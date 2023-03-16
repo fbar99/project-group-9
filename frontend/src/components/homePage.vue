@@ -3,13 +3,16 @@ import { DateTime } from 'luxon'
 import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 
 export default {
   components: {
     AttendanceChart
   },
   data() {
+    const user = useLoggedInUserStore();
     return {
+      user,
       recentEvents: [],
       labels: [],
       chartData: [],
@@ -73,13 +76,18 @@ export default {
 <template>
   <main>
     <div>
-      <h1
+      <h1 v-if="user.isLoggedIn"
         class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
       >
         Welcome
       </h1>
+      <h1 v-else
+        class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
+      >
+        Welcome, please sign in
+      </h1>
       <br />
-      <div
+      <div v-if="user.isLoggedIn"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
       >
         <div class="ml-10"></div>

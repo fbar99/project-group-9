@@ -3,10 +3,15 @@ import useVuelidate from '@vuelidate/core'
 import { required, email, alpha, numeric } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 
 export default {
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    const store = useLoggedInUserStore()
+    return { 
+      v$: useVuelidate({ $autoDirty: true }), 
+      store
+    }
   },
   data() {
     return {
@@ -21,6 +26,7 @@ export default {
     axios.get(`${apiURL}/org`).then((res) => {
       this.org = res.data._id
       console.log(this.org)
+      //console.log(this.$usrRole)
     })
   },
   mounted() {
@@ -30,12 +36,18 @@ export default {
     login() {
       this.v$.$validate().then((valid) => {
         if (valid) {
-          if (this.user.email == "editor@gmail.com" && this.user.password == "default")
-            this.$router.push({ name: 'homePage' })
-          else if (this.user.email == "viewer@gmail.com" && this.user.password == "default")
-            this.$router.push({ name: 'homePage' })
-          else
-          alert('Username/Password is incorrect.')
+          this.store.login(this.user.email, this.user.password);
+          if (this.user.email == "editor@gmail.com" && this.user.password == "default") {
+            //this.$usrRole = "editor"
+            //console.log(this.$usrRole)
+            // this.$router.push({ name: 'homepage' })
+          }
+          else if (this.user.email == "viewer@gmail.com" && this.user.password == "default") {
+            //this.$usrRole = "viewer"
+            // this.$router.push({ name: 'homepage' })
+          }
+          // else
+          // alert('Username/Password is incorrect.')
           // axios
           //   .get(`${apiURL}/users/lookup/${this.user}`)
           //   .then((res) => {

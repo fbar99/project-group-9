@@ -34,6 +34,7 @@ export default {
     axios.get(`${apiURL}/org`).then((res) => {
       this.org = res.data._id
       console.log(this.org)
+      console.log("test")
     })
   },
   mounted() {

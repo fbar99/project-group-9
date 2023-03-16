@@ -1,17 +1,24 @@
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 
 export default {
   name: 'App',
   data() {
+    const user = useLoggedInUserStore();
     return {
-      orgName: 'Dataplatform'
+      orgName: 'Dataplatform',
+      user
     }
   },
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.orgName = res.data.name
+      console.log(this.orgName)
+      //console.log(this.$usrRole)
+      console.log("test")
+      console.log(this.user.role)
     })
   }
 }
@@ -25,7 +32,7 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
-            <li>
+            <li v-if="!user.isLoggedIn">
               <router-link to="login">
                 <span
                   style="position: relative; top: 6px"
@@ -45,8 +52,7 @@ export default {
                 Dashboard
               </router-link>
             </li>
-            <li>
-              <!-- v-if="isEditor" -->
+            <li v-if="user.isLoggedIn && user.role == 'editor'">
               <router-link to="/intakeform">
                 <span
                   style="position: relative; top: 6px"
@@ -56,7 +62,7 @@ export default {
                 Client Intake Form
               </router-link>
             </li>
-            <li>
+            <li v-if="user.isLoggedIn && user.role == 'editor'">
               <!-- v-if="isEditor" -->
               <router-link to="/eventform">
                 <span
@@ -67,7 +73,7 @@ export default {
                 Create Event
               </router-link>
             </li>
-            <li>
+            <li v-if="user.isLoggedIn && user.role == 'editor'">
               <!-- v-if="isEditor" -->
               <router-link to="/serviceform">
                 <span
@@ -78,7 +84,7 @@ export default {
                 Create Service
               </router-link>
             </li>
-            <li>
+            <li v-if="user.isLoggedIn">
               <!-- v-if="isEditor || isViewer" -->
               <router-link to="/findclient">
                 <span
@@ -89,7 +95,7 @@ export default {
                 Find Client
               </router-link>
             </li>
-            <li>
+            <li v-if="user.isLoggedIn">
               <!-- v-if="isEditor || isViewer" -->
               <router-link to="/findevents">
                 <span
@@ -100,7 +106,7 @@ export default {
                 Find Event
               </router-link>
             </li>
-            <li>
+            <li v-if="user.isLoggedIn">
               <!-- v-if="isEditor || isViewer" -->
               <router-link to="/findservices">
                 <span
