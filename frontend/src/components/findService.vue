@@ -9,7 +9,8 @@ export default {
       // Parameter for search to occur
       searchBy: '',
       name: '',
-      status: ''
+      status: '',
+      services: []
     }
   },
   created() {
@@ -41,11 +42,11 @@ export default {
       this.status = ''
  
 
-      // get all entries
+      // get all services
       this.getServices()
     },
-    editService(serviceID) {
-      this.$router.push({ name: 'updateservice', params: { id: serviceID } })
+    editService(servicesID) {
+      this.$router.push({ name: 'servicedetails', params: { id: servicesID } })
     }
   }
 }
@@ -140,15 +141,15 @@ export default {
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editService(service._id)"
+              @click="editService(services._id)"
               v-for="service in queryData"
-              :key="service._id"
+              :key="services._id"
             >
               <td class="p-2 text-left">
-                {{ service.name }}
+                {{ services.name }}
               </td>
               <td class="p-2 text-left">
-                {{ service.status }}
+                {{ services.status }}
               </td>
             </tr>
           </tbody>

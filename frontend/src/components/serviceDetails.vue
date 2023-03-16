@@ -12,17 +12,17 @@ export default {
   },
   data() {
     return {
-        service: {
+        services: {
             name: '',
             status: '',
             description: '',
-            services: ''
+            services: []
       }
     }
   },
   created() {
     axios.get(`${apiURL}/services/id/${this.$route.params.id}`).then((res) => {
-      this.service = res.data
+      this.services = res.data
     //   this.service.name= this.formattedDate(this.service.name)
     //   this.event.attendees.forEach((e) => {
     //     axios.get(`${apiURL}/clients/id/${e}`).then((res) => {
@@ -42,13 +42,13 @@ export default {
     //     .toISODate()
     // },
     handleServiceUpdate() {
-      axios.put(`${apiURL}/services/update/${this.id}`, this.service).then(() => {
+      axios.put(`${apiURL}/services/update/${this.id}`, this.services).then(() => {
         alert('Update has been saved.')
         this.$router.back()
       })
     },
-    editService(serviceID) {
-      this.$router.push({ name: 'updateservice', params: { id: serviceID } })
+    editService(servicesID) {
+      this.$router.push({ name: 'servicedetails', params: { id: servicesID } })
     },
     serviceDelete() {
       axios.delete(`${apiURL}/services/${this.id}`).then(() => {
@@ -60,7 +60,7 @@ export default {
   // sets validations for the various data properties
   validations() {
     return {
-      service: {
+      services: {
         name: { required },
         status: { required }
       }
@@ -91,12 +91,12 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="service.name"
+                v-model="services.name"
               />
-              <span class="text-black" v-if="v$.service.name.$error">
+              <span class="text-black" v-if="v$.services.name.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.service.name.$errors"
+                  v-for="error of v$.services.name.$errors"
                   :key="error.$uid"
                 >
                   {{ error.$message }}!
@@ -113,7 +113,7 @@ export default {
               <input
                 type="text"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                v-model="service.status"
+                v-model="services.status"
               />
               <!-- <span class="text-black" v-if="v$.event.date.$error">
                 <p
@@ -137,7 +137,7 @@ export default {
               <textarea
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 rows="2"
-                v-model="service.description"
+                v-model="services.description"
               ></textarea>
             </label>
           </div>
@@ -154,7 +154,7 @@ export default {
                   type="checkbox"
                   id="familySupport"
                   value="Family Support"
-                  v-model="service.services"
+                  v-model="services.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
@@ -167,7 +167,7 @@ export default {
                   type="checkbox"
                   id="adultEducation"
                   value="Adult Education"
-                  v-model="service.services"
+                  v-model="services.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
@@ -180,7 +180,7 @@ export default {
                   type="checkbox"
                   id="youthServices"
                   value="Youth Services Program"
-                  v-model="service.services"
+                  v-model="services.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
@@ -193,7 +193,7 @@ export default {
                   type="checkbox"
                   id="childhoodEducation"
                   value="Early Childhood Education"
-                  v-model="service.services"
+                  v-model="services.services"
                   class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                   notchecked
                 />
@@ -202,74 +202,6 @@ export default {
             </div>
           </div>
         </div>
-
-        <!-- grid container -->
-        <!-- <div
-          class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-        >
-          <h2 class="text-2xl font-bold">Address</h2> -->
-          <!-- form field -->
-          <!-- <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Address Line 1</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
-                v-model="event.address.line1"
-              />
-            </label>
-          </div> -->
-          <!-- form field -->
-          <!-- <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Address Line 2</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
-                v-model="event.address.line2"
-              />
-            </label>
-          </div> -->
-          <!-- form field -->
-          <!-- <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">City</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
-                v-model="event.address.city"
-              />
-            </label>
-          </div>
-          <div></div> -->
-          <!-- form field -->
-          <!-- <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">County</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
-                v-model="event.address.county"
-              />
-            </label>
-          </div> -->
-          <!-- form field -->
-          <!-- <div class="flex flex-col">
-            <label class="block">
-              <span class="text-gray-700">Zip Code</span>
-              <input
-                type="text"
-                class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                placeholder
-                v-model="event.address.zip"
-              />
-            </label>
-          </div>
-        </div> -->
 
         <!-- grid container -->
         <div
@@ -303,44 +235,7 @@ export default {
             </button>
           </div>
         </div>
-
         <hr class="mt-10 mb-10" />
-
-        <!-- grid container -->
-        <!-- <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
-        >
-          <div>
-            <h2 class="text-2xl font-bold">List of Attendees</h2>
-            <h3 class="italic">Click table row to edit/display an entry</h3>
-          </div>
-          <div class="flex flex-col col-span-2">
-            <table class="min-w-full shadow-md rounded">
-              <thead class="bg-gray-50 text-xl">
-                <tr>
-                  <th class="p-4 text-left">Name</th>
-                  <th class="p-4 text-left">City</th>
-                  <th class="p-4 text-left">Phone Number</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-gray-300">
-                <tr
-                  @click="editClient(client._id)"
-                  v-for="client in clientAttendees"
-                  :key="client._id"
-                >
-                  <td class="p-2 text-left">
-                    {{ client.firstName + ' ' + client.lastName }}
-                  </td>
-                  <td class="p-2 text-left">{{ client.address.city }}</td>
-                  <td class="p-2 text-left">
-                    {{ client.phoneNumber.primary }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> -->
       </form>
     </div>
   </main>
