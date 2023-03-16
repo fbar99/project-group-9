@@ -4,10 +4,12 @@ import axios from 'axios'
 import AttendanceChart from './barChart.vue'
 const apiURL = import.meta.env.VITE_ROOT_API
 import { useLoggedInUserStore } from "@/store/loggedInUser";
+import pieChart from './pieChart.vue'
 
 export default {
   components: {
-    AttendanceChart
+    AttendanceChart,
+    pieChart
   },
   data() {
     const user = useLoggedInUserStore();
@@ -118,6 +120,7 @@ export default {
               :label="labels"
               :chart-data="chartData"
             ></AttendanceChart>
+            <pieChart></pieChart> 
 
             <!-- Start of loading animation -->
             <div class="mt-40" v-if="loading">
