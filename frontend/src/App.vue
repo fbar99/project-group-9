@@ -5,17 +5,19 @@ const apiURL = import.meta.env.VITE_ROOT_API
 import { useLoggedInUserStore } from "@/store/loggedInUser";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { Pie } from 'vue-chartjs'
-//import * as chartConfig from './assets/chartConfig.js'
 ChartJS.register(ArcElement, Tooltip, Legend)
+import { useServiceListStore } from "@/store/serviceStore";
 
 export default {
   name: 'App',
   components: {Pie},
   data() {
     const user = useLoggedInUserStore();
+    const list = useServiceListStore();
     return {
       orgName: 'Dataplatform',
       user,
+      list
       //chartConfig
     }
   },
@@ -41,6 +43,16 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
+            <li>
+              <router-link to="" v-on:click="list.add('francis','active','test')">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >login</span
+                >
+                Test
+              </router-link>
+            </li>
             <li v-if="user.isLoggedIn">
               <router-link to="" v-on:click="user.logout()">
                 <span
