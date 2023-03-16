@@ -1,3 +1,4 @@
+<!-- Added Login Page -->
 <script>
 import useVuelidate from '@vuelidate/core'
 import { required, email, alpha, numeric } from '@vuelidate/validators'
@@ -79,21 +80,28 @@ export default {
 </script>
 <template>
   <main>
+    <!-- Page Title -->
     <h1
       class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
     >
-      Sign In
+      Welcome!
     </h1>
+    <h3
+      class="text-2xl text-red-700 tracking-widest text-center"
+    >
+    Sign-In 
+    </h3>
+    <!-- Credential Table -->
     <!-- style="display: flex;align-items: center;justify-content: center;" -->
-    <div class="px-10 py-20">
+    <div class="px-10 py-10">
       <!-- @submit.prevent stops the submit event from reloading the page-->
       <form @submit.prevent="login">
         <!-- grid container -->
         <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
+          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 "
         >
           <!-- <div></div> -->
-          <!-- form field -->
+          <!-- form field: email-->
           <div class="flex flex-col">
             <label class="block">
               <!-- <span class="text-gray-700">Email</span> -->
@@ -115,7 +123,7 @@ export default {
               </span>
             </label>
             <br>
-            <!-- form field -->
+            <!-- form field: password -->
             <input
                 type="password"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -132,7 +140,7 @@ export default {
                 </p>
               </span>
               <br>
-            <!-- submit button -->
+            <!-- submit button: login -->
             <button class="bg-red-700 text-white rounded" type="submit">
               Login
             </button>
