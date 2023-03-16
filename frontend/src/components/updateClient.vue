@@ -5,6 +5,7 @@ import VueMultiselect from 'vue-multiselect'
 import axios from 'axios'
 import { DateTime } from 'luxon'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 
 export default {
   props: ['id'],
@@ -13,8 +14,10 @@ export default {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
+    const user = useLoggedInUserStore();
     return {
       // rename events arrays for added clarity
+      user,
       eventsAll: [],
       eventsSelected: [],
       eventsRegistered: [],
@@ -350,7 +353,7 @@ export default {
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
         >
-          <div class="flex justify-between mt-10 mr-20">
+          <div v-if="user.isLoggedIn && user.role == 'editor'" class="flex justify-between mt-10 mr-20">
             <button
               @click="updateClient"
               type="submit"
@@ -359,7 +362,7 @@ export default {
               Update Client
             </button>
           </div>
-          <div class="flex justify-between mt-10 mr-20">
+          <div v-if="user.isLoggedIn && user.role == 'editor'" class="flex justify-between mt-10 mr-20">
             <button
               @click="deregisterClient"
               type="submit"
@@ -411,7 +414,7 @@ export default {
             </table>
           </div>
 
-          <div class="flex flex-col">
+          <div v-if="user.isLoggedIn && user.role == 'editor'" class="flex flex-col">
             <!-- fixed weird selection duplication bug -->
             <VueMultiselect
               class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"

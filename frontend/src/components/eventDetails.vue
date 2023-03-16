@@ -4,6 +4,7 @@ import { required } from '@vuelidate/validators'
 import axios from 'axios'
 import { DateTime } from 'luxon'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useLoggedInUserStore } from "@/store/loggedInUser";
 
 export default {
   props: ['id'],
@@ -11,7 +12,9 @@ export default {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
+    const user = useLoggedInUserStore();
     return {
+      user,
       clientAttendees: [],
       event: {
         name: '',
@@ -284,7 +287,7 @@ export default {
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
         >
-          <div class="flex justify-between mt-10 mr-20">
+          <div v-if="user.isLoggedIn && user.role == 'editor'" class="flex justify-between mt-10 mr-20">
             <button
               @click="handleEventUpdate"
               type="submit"
@@ -293,7 +296,7 @@ export default {
               Update Event
             </button>
           </div>
-          <div class="flex justify-between mt-10 mr-20">
+          <div v-if="user.isLoggedIn && user.role == 'editor'" class="flex justify-between mt-10 mr-20">
             <button
               @click="eventDelete"
               type="submit"

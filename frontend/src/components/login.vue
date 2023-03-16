@@ -91,20 +91,10 @@ export default {
     >
     Sign-In 
     </h3>
-    <!-- Credential Table -->
-    <!-- style="display: flex;align-items: center;justify-content: center;" -->
-    <div class="px-10 py-10">
-      <!-- @submit.prevent stops the submit event from reloading the page-->
+    <br>
+    <div class="container">
       <form @submit.prevent="login">
-        <!-- grid container -->
-        <div
-          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10 "
-        >
-          <!-- <div></div> -->
-          <!-- form field: email-->
-          <div class="flex flex-col">
             <label class="block">
-              <!-- <span class="text-gray-700">Email</span> -->
               <input
                 type="email"
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -139,15 +129,22 @@ export default {
                   {{ error.$message }}!
                 </p>
               </span>
-              <br>
+              <br><br>
             <!-- submit button: login -->
             <button class="bg-red-700 text-white rounded" type="submit">
               Login
             </button>
-          </div>
-          <!-- <div></div> -->
-        </div>
-      </form>
+          <p>Editor account: editor@gmail.com</p>
+          <p>Viewer account: viewer@gmail.com</p>
+          <p>Password for both: default</p>
+        </form>
     </div>
   </main>
 </template>
+
+<style>
+    .container {
+      margin: 0 auto;
+      max-width: 400px; /* You can adjust the max-width as needed */
+    }
+  </style>
