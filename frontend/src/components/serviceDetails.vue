@@ -116,10 +116,6 @@ export default {
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="services.status"
               />
-<<<<<<< HEAD
-=======
-
->>>>>>> 867d05066346f757c3421c996054a2dbc2d46930
             </label>
           </div>
 
