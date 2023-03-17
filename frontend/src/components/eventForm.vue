@@ -3,14 +3,19 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import services from './serviceForm.vue'
 
 export default {
   setup() {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
+  components: { serviceForm },
   data() {
     return {
       // removed unnecessary extra array to track services
+      services: [
+        "name"
+      ],
       event: {
         name: '',
         services: [],
@@ -42,6 +47,23 @@ export default {
             console.log(error)
           })
       }
+    },
+    getServices() {
+      this.list = this.originalList
+      window.scrollTo(0, 0)
+    },
+    clearSearch() {
+      // Resets all the variables
+      this.searchBy = ''
+      this.name = ''
+      this.status = ''
+ 
+
+      // get all services
+      this.getServices()
+    },
+    editService(servicesID) {
+      this.$router.push({ name: 'servicedetails', params: { id: servicesID } })
     }
   },
   // sets validations for the various data properties
@@ -133,6 +155,8 @@ export default {
           <div></div>
           <div></div>
           <div></div>
+
+
           <!-- form field -->
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
@@ -150,6 +174,25 @@ export default {
               </label>
             </div>
             <div>
+            <tbody class="divide-y divide-gray-300">
+            <tr
+              @click="editService(serviceObject._id)"
+              v-for="serviceObject in list.serviceList"
+              :key="serviceObject.id"
+            >
+              <td class="p-2 text-left">
+                {{ serviceObject.name }}
+              </td>
+              <!-- <td class="p-2 text-left">
+                {{ serviceObject.status }}
+              </td>
+              <td class="p-2 text-left">
+                {{ serviceObject.description }}
+              </td> -->
+            </tr>
+          </tbody>
+        </div>
+            <!-- <div>
               <label for="adultEducation" class="inline-flex items-center">
                 <input
                   type="checkbox"
@@ -187,7 +230,7 @@ export default {
                 />
                 <span class="ml-2">Early Childhood Education</span>
               </label>
-            </div>
+            </div> -->
           </div>
         </div>
 

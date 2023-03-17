@@ -7,17 +7,19 @@ const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    const list = useServiceListStore();
+    return { v$: useVuelidate({ $autoDirty: true }),
+             list }
   },
   data() {
-    const list = useServiceListStore();
     return {
       // removed unnecessary extra array to track services
       org: '',
       services: {
         name: '',
         status: '',
-        description: ''
+        description: '',
+        // list
       }
     }
   },
@@ -27,11 +29,8 @@ export default {
       const isFormCorrect = await this.v$.$validate()
       // If no errors found. isFormCorrect = True then the form is submitted
         if (isFormCorrect) {
-        this.store.add(this.services.name, this.services.status, this.services.description);
+        this.list.add(this.services.name, this.services.status, this.services.description);
         alert('Service has been added.')
-        .catch((error) => {
-          console.log(error)
-        })
         }
 
         // axios
@@ -51,7 +50,7 @@ export default {
     return {
       services: {
         name: { required },
-        status: { required }
+        status: { required },
       }
     }
   }
@@ -108,13 +107,13 @@ export default {
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
             v-model="services.status"
           >
-            <option value="Service Active">Active</option>
-            <option value="Service Not Active">Not Active</option>
+            <option value="Active">Active</option>
+            <option value="Not Active">Not Active</option>
           </select>
               <span class="text-black" v-if="v$.services.status.$error">
                 <p
                   class="text-red-700"
-                  v-for="error of v$.services.name.$errors"
+                  v-for="error of v$.services.status.$errors"
                   :key="error.$uid"
                 >
                   {{ error.$message }}!
@@ -132,6 +131,7 @@ export default {
               <textarea
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 rows="3"
+                v-model="services.description"
               ></textarea>
             </label>
           </div>
