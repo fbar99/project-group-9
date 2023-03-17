@@ -150,7 +150,7 @@ export default {
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editService(serviceObject._id)"
+              @click="editService(serviceObject.id)"
               v-for="serviceObject in list.serviceList"
               :key="serviceObject.id"
             >
