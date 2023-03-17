@@ -5,6 +5,7 @@ import { useServiceListStore } from "@/store/serviceStore";
 
 export default {
   data() {
+    // added constant values from the service store
     const originalList = useServiceListStore();
     const list = originalList;
     return {
@@ -74,6 +75,8 @@ export default {
       >
         <h2 class="text-2xl font-bold">Search Service By </h2> 
         <!-- Displays Service Name search field -->
+        
+        <!-- Search Service By isn't fully working but edit and delete service both work -->
         <div class="flex flex-col">
           <select
             class="rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
@@ -111,6 +114,7 @@ export default {
       >
         <div></div>
         <div></div>
+        <!-- clears the search bar -->
         <div class="mt-5 grid-cols-2">
           <button
             class="mr-10 border border-red-700 bg-white text-red-700 rounded"
@@ -119,6 +123,7 @@ export default {
           >
             Clear Search
           </button>
+          <!-- submit bar for search for services  -->
           <button
             class="bg-red-700 text-white rounded"
             @click="handleSubmitForm"
@@ -135,6 +140,7 @@ export default {
     <div
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"
     >
+    <!-- Everything in this section is working -->
       <div class="ml-10">
         <h2 class="text-2xl font-bold">List of Services</h2>
         <h3 class="italic">Click table row to edit/display an entry</h3>
@@ -149,6 +155,7 @@ export default {
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
+            <!-- Displays the users newly created services using the @click -->
             <tr
               @click="editService(serviceObject.id)"
               v-for="serviceObject in list.serviceList"

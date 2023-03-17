@@ -10,6 +10,7 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   props: ['id'],
   setup() {
+    // added the constant data from the stores serviceStore and loggedinUser
     const list = useServiceListStore();
     const user = useLoggedInUserStore();
     return { v$: useVuelidate({ $autoDirty: true }),
@@ -107,15 +108,7 @@ export default {
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="services.status"
               />
-              <!-- <span class="text-black" v-if="v$.event.date.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.event.date.$errors"
-                  :key="error.$uid"
-                >
-                  {{ error.$message }}!
-                </p>
-              </span> -->
+
             </label>
           </div>
 

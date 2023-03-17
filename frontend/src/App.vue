@@ -185,9 +185,6 @@ export default {
     </div>
   </main>
 
-  <!-- <template>
-  <Pie :data="data" :options="options" />
-  </template> -->
 
 </template>
 <style>
