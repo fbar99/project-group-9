@@ -3,13 +3,16 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
-import services from './serviceForm.vue'
+//import services from './serviceForm.vue'
+import { useServiceListStore } from "@/store/serviceStore";
 
 export default {
   setup() {
-    return { v$: useVuelidate({ $autoDirty: true }) }
+    const list = useServiceListStore();
+    return { v$: useVuelidate({ $autoDirty: true }),
+    list }
   },
-  components: { serviceForm },
+  //components: { serviceForm },
   data() {
     return {
       // removed unnecessary extra array to track services
@@ -174,7 +177,7 @@ export default {
               </label>
             </div>
             <div>
-            <tbody class="divide-y divide-gray-300">
+            <!-- <tbody class="divide-y divide-gray-300">
             <tr
               @click="editService(serviceObject._id)"
               v-for="serviceObject in list.serviceList"
@@ -183,16 +186,16 @@ export default {
               <td class="p-2 text-left">
                 {{ serviceObject.name }}
               </td>
-              <!-- <td class="p-2 text-left">
+              <td class="p-2 text-left">
                 {{ serviceObject.status }}
               </td>
               <td class="p-2 text-left">
                 {{ serviceObject.description }}
-              </td> -->
+              </td>
             </tr>
-          </tbody>
+          </tbody> -->
         </div>
-            <!-- <div>
+            <div>
               <label for="adultEducation" class="inline-flex items-center">
                 <input
                   type="checkbox"
@@ -230,7 +233,16 @@ export default {
                 />
                 <span class="ml-2">Early Childhood Education</span>
               </label>
-            </div> -->
+            </div>
+            <div>
+              <label v-for="serviceObject in list.serviceList" :key="serviceObject.id">
+              <input v-if="serviceObject.status == 'Active' || serviceObject.status == 'active'" type="checkbox" :value="serviceObject.name" v-model="event.services"
+              class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
+              notchecked>
+              <a v-if="serviceObject.status == 'Active' || serviceObject.status == 'active'">{{ serviceObject.name }}</a>
+              <br>
+              </label>
+            </div>
           </div>
         </div>
 

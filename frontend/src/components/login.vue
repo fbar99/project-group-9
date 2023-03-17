@@ -26,8 +26,6 @@ export default {
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.org = res.data._id
-      console.log(this.org)
-      //console.log(this.$usrRole)
     })
   },
   mounted() {
@@ -36,33 +34,9 @@ export default {
   methods: {
     login() {
       this.v$.$validate().then((valid) => {
+        //if form is valid, then the pinia store login method is executed with email and password params
         if (valid) {
           this.store.login(this.user.email, this.user.password);
-          if (this.user.email == "editor@gmail.com" && this.user.password == "default") {
-            //this.$usrRole = "editor"
-            //console.log(this.$usrRole)
-            // this.$router.push({ name: 'homepage' })
-          }
-          else if (this.user.email == "viewer@gmail.com" && this.user.password == "default") {
-            //this.$usrRole = "viewer"
-            // this.$router.push({ name: 'homepage' })
-          }
-          // else
-          // alert('Username/Password is incorrect.')
-          // axios
-          //   .get(`${apiURL}/users/lookup/${this.user}`)
-          //   .then((res) => {
-          //     if (res.data) {
-          //       if (res.data.orgs.includes(this.org)) {
-          //         alert('Sign in successfull')
-          //         this.$router.push({ name: 'homePage' })
-          //       }
-          //     } else {
-          //           alert('Username/Password is incorrect.')
-          //           this.user.email = '';
-          //           this.user.password = '';
-          //     }
-          //   })
         }
       })
     }
@@ -143,8 +117,9 @@ export default {
 </template>
 
 <style>
+    /* container for login form makets it so it's formatted in the center */
     .container {
       margin: 0 auto;
-      max-width: 400px; /* You can adjust the max-width as needed */
+      max-width: 400px;
     }
   </style>
