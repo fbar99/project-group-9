@@ -2,6 +2,7 @@
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
+import { useServiceListStore } from "@/store/serviceStore";
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -9,8 +10,10 @@ export default {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
+    const list = useServiceListStore();
     return {
       // removed unnecessary extra array to track services
+      org: '',
       services: {
         name: '',
         status: '',
@@ -19,21 +22,28 @@ export default {
     }
   },
   methods: {
-    async handleSubmitForm() {
+    async add() {
       // Checks to see if there are any errors in validation
       const isFormCorrect = await this.v$.$validate()
       // If no errors found. isFormCorrect = True then the form is submitted
-      if (isFormCorrect) {
-        axios
-          .post(`${apiURL}/services`, this.services)
-          .then(() => {
-            alert('Service has been added.')
-            this.$router.push({ name: 'findservices' })
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      }
+        if (isFormCorrect) {
+        this.store.add(this.services.name, this.services.status, this.services.description);
+        alert('Service has been added.')
+        .catch((error) => {
+          console.log(error)
+        })
+        }
+
+        // axios
+        //   .post(`${apiURL}/services`, this.newService)
+        //   .then(() => {
+        //     alert('Service has been added.')
+        //     this.$router.push({ name: 'findservices' })
+        //   })
+        //   .catch((error) => {
+        //     console.log(error)
+        //   })
+      
     }
   },
   // sets validations for the various data properties
@@ -58,7 +68,8 @@ export default {
     </div>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit event from reloading the page-->
-      <form @submit.prevent="handleSubmitForm">
+      <!-- <form @submit.prevent="handleSubmitForm"> -->
+        <form @submit.prevent="add">
         <!-- grid container -->
         <div
           class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-10"

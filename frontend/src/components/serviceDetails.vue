@@ -3,6 +3,7 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
 import { DateTime } from 'luxon'
+import { useServiceListStore } from "@/store/serviceStore";
 const apiURL = import.meta.env.VITE_ROOT_API
 
 export default {
@@ -11,36 +12,25 @@ export default {
     return { v$: useVuelidate({ $autoDirty: true }) }
   },
   data() {
+    const list = useServiceListStore();
     return {
+      list: [],
         services: {
-            name: '',
-            status: '',
-            description: '',
-            services: []
+          name: '',
+          status: '',
+          description: '',
+          services: []
+        }
       }
-    }
-  },
+    },
+  
   created() {
     axios.get(`${apiURL}/services/id/${this.$route.params.id}`).then((res) => {
-      this.services = res.data
-    //   this.service.name= this.formattedDate(this.service.name)
-    //   this.event.attendees.forEach((e) => {
-    //     axios.get(`${apiURL}/clients/id/${e}`).then((res) => {
-    //       this.clientAttendees.push(res.data)
-    //     })
-    //   })
+      this.list.services = res.data
     })
   },
+
   methods: {
-    // better formatted date, converts UTC to local time
-    // formattedDate(datetimeDB) {
-    //   const dt = DateTime.fromISO(datetimeDB, {
-    //     zone: 'utc'
-    //   })
-    //   return dt
-    //     .setZone(DateTime.now().zoneName, { keepLocalTime: true })
-    //     .toISODate()
-    // },
     handleServiceUpdate() {
       axios.put(`${apiURL}/services/update/${this.id}`, this.services).then(() => {
         alert('Update has been saved.')
