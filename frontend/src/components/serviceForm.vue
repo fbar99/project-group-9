@@ -19,7 +19,7 @@ export default {
         name: '',
         status: '',
         description: '',
-        // list
+
       }
     }
   },
@@ -32,16 +32,6 @@ export default {
         this.list.add(this.services.name, this.services.status, this.services.description);
         alert('Service has been added.')
         }
-
-        // axios
-        //   .post(`${apiURL}/services`, this.newService)
-        //   .then(() => {
-        //     alert('Service has been added.')
-        //     this.$router.push({ name: 'findservices' })
-        //   })
-        //   .catch((error) => {
-        //     console.log(error)
-        //   })
       
     }
   },
@@ -67,7 +57,6 @@ export default {
     </div>
     <div class="px-10 py-20">
       <!-- @submit.prevent stops the submit event from reloading the page-->
-      <!-- <form @submit.prevent="handleSubmitForm"> -->
         <form @submit.prevent="add">
         <!-- grid container -->
         <div
@@ -139,9 +128,7 @@ export default {
           <div></div>
           <div></div>
           <div></div>
-
         </div>
-
 
         <div class="flex justify-between mt-10 mr-20">
           <button class="bg-red-700 text-white rounded" type="submit">

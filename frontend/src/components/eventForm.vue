@@ -3,16 +3,15 @@ import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
-//import services from './serviceForm.vue'
 import { useServiceListStore } from "@/store/serviceStore";
 
 export default {
   setup() {
+    // exports data from the service store
     const list = useServiceListStore();
     return { v$: useVuelidate({ $autoDirty: true }),
     list }
   },
-  //components: { serviceForm },
   data() {
     return {
       // removed unnecessary extra array to track services
@@ -62,9 +61,11 @@ export default {
       this.status = ''
  
 
-      // get all services
+      // gets all services
       this.getServices()
     },
+
+    // edits the services
     editService(servicesID) {
       this.$router.push({ name: 'servicedetails', params: { id: servicesID } })
     }
@@ -144,6 +145,7 @@ export default {
 
           <div></div>
           <div></div>
+
           <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
@@ -161,6 +163,8 @@ export default {
 
 
           <!-- form field -->
+          <!-- Left in the original hard coded data to show the newly added active services underneath -->
+
           <div class="flex flex-col grid-cols-3">
             <label>Services Offered at Event</label>
             <div>
@@ -177,24 +181,8 @@ export default {
               </label>
             </div>
             <div>
-            <!-- <tbody class="divide-y divide-gray-300">
-            <tr
-              @click="editService(serviceObject._id)"
-              v-for="serviceObject in list.serviceList"
-              :key="serviceObject.id"
-            >
-              <td class="p-2 text-left">
-                {{ serviceObject.name }}
-              </td>
-              <td class="p-2 text-left">
-                {{ serviceObject.status }}
-              </td>
-              <td class="p-2 text-left">
-                {{ serviceObject.description }}
-              </td>
-            </tr>
-          </tbody> -->
         </div>
+
             <div>
               <label for="adultEducation" class="inline-flex items-center">
                 <input
@@ -208,6 +196,7 @@ export default {
                 <span class="ml-2">Adult Education</span>
               </label>
             </div>
+
             <div>
               <label for="youthServices" class="inline-flex items-center">
                 <input
@@ -221,6 +210,7 @@ export default {
                 <span class="ml-2">Youth Services Program</span>
               </label>
             </div>
+
             <div>
               <label for="childhoodEducation" class="inline-flex items-center">
                 <input
@@ -234,7 +224,13 @@ export default {
                 <span class="ml-2">Early Childhood Education</span>
               </label>
             </div>
+<<<<<<< HEAD
+            
             <!-- checkbox inputs are created by a loop that loads the services in the list and conditionally render if they're active-->
+=======
+
+            <!-- Section where the users added active services loads into the create event page with checkboxes -->
+>>>>>>> 867d05066346f757c3421c996054a2dbc2d46930
             <div>
               <label v-for="serviceObject in list.serviceList" :key="serviceObject.id">
               <input v-if="serviceObject.status == 'Active' || serviceObject.status == 'active'" type="checkbox" :value="serviceObject.name" v-model="event.services"
@@ -264,6 +260,7 @@ export default {
               />
             </label>
           </div>
+
           <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
@@ -276,6 +273,7 @@ export default {
               />
             </label>
           </div>
+
           <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
@@ -289,6 +287,7 @@ export default {
             </label>
           </div>
           <div></div>
+
           <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
@@ -301,6 +300,7 @@ export default {
               />
             </label>
           </div>
+
           <!-- form field -->
           <div class="flex flex-col">
             <label class="block">
