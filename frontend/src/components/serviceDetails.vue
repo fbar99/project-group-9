@@ -10,6 +10,7 @@ const apiURL = import.meta.env.VITE_ROOT_API
 export default {
   props: ['id'],
   setup() {
+    //stores for logged in user and service list are created
     const list = useServiceListStore();
     const user = useLoggedInUserStore();
     return { v$: useVuelidate({ $autoDirty: true }),
@@ -27,6 +28,8 @@ export default {
     },
   
   created() {
+      //looks for dictionary that has the id passed from the route and assigns the values to the services
+      //array so it can be rendered in the respective boxes
       const index = this.list.serviceList.findIndex((dict) => dict.id == this.$route.params.id);
       this.services.name = this.list.serviceList[index].name
       this.services.status = this.list.serviceList[index].status
@@ -36,17 +39,18 @@ export default {
 
   methods: {
     handleServiceUpdate() {
+      //calls the method that will edit by finding the ID passed from the route
         this.list.edit(this.$route.params.id, this.services.name, this.services.status, this.services.description);
-        this.$router.back()
     },
     editService(servicesID) {
       this.$router.push({ name: 'servicedetails', params: { id: servicesID } })
     },
     serviceDelete() {
+      //deletes the service from list by passing the ID provided by route as a parameter
+      //it is first converted to an INT otherwise it won't execute
         console.log(this.$route.params.id);
         console.log(typeof this.$route.params.id)
         this.list.delete(parseInt(this.$route.params.id));
-        //this.$router.push({ name: 'findservices' })
     }
   },
   // sets validations for the various data properties
@@ -63,6 +67,7 @@ export default {
 <template>
   <main>
     <div>
+      <!-- form that has inputs for the services and update and delete buttons-->
       <h1
         class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
       >
@@ -107,15 +112,6 @@ export default {
                 class="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 v-model="services.status"
               />
-              <!-- <span class="text-black" v-if="v$.event.date.$error">
-                <p
-                  class="text-red-700"
-                  v-for="error of v$.event.date.$errors"
-                  :key="error.$uid"
-                >
-                  {{ error.$message }}!
-                </p>
-              </span> -->
             </label>
           </div>
 

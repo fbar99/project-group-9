@@ -23,6 +23,7 @@ export default {
       }
     }
   },
+  //gets org data so it can be associated with a username
   created() {
     axios.get(`${apiURL}/org`).then((res) => {
       this.org = res.data._id

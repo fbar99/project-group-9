@@ -31,16 +31,15 @@ export const useLoggedInUserStore = defineStore({
         isLoggedIn: false
       });
       this.$router.push("/");
-      // we could do other stuff like redirecting the user
     }
   }
 });
 
 //simulate a login - we will later use our backend to handle authentication
 function apiLogin(u, p) {
+  //if values are correct, is allowed is set to true and role to editor
   if (u === "editor@gmail.com" && p === "default") return Promise.resolve({ isAllowed: true, role: "editor" });
   if (u === "viewer@gmail.com" && p === "default") return Promise.resolve({ isAllowed: true, role: "viewer" });
-  // if (p === "ed") return Promise.resolve({ isAllowed: false });
   alert('Username/Password is incorrect.')
   return Promise.reject(new Error("invalid credentials"));
 }

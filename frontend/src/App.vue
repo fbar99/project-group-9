@@ -43,36 +43,6 @@ export default {
         </section>
         <nav class="mt-10">
           <ul class="flex flex-col gap-4">
-            <li>
-              <router-link to="" v-on:click="list.add('francis','active','test')">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >login</span
-                >
-                add
-              </router-link>
-            </li>
-            <li>
-              <router-link to="" v-on:click="list.edit('3','michael','Not Active','test')">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >login</span
-                >
-                edit
-              </router-link>
-            </li>
-            <li>
-              <router-link to="" v-on:click="list.delete(3)">
-                <span
-                  style="position: relative; top: 6px"
-                  class="material-icons"
-                  >login</span
-                >
-                delete
-              </router-link>
-            </li>
             <li v-if="user.isLoggedIn">
               <router-link to="" v-on:click="user.logout()">
                 <span

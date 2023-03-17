@@ -120,6 +120,7 @@ export default {
               :label="labels"
               :chart-data="chartData"
             ></AttendanceChart>
+            <!-- pie chart is added as component-->
             <pieChart></pieChart> 
 
             <!-- Start of loading animation -->

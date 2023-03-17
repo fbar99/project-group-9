@@ -25,12 +25,12 @@ export default {
     handleSubmitForm() {
       let endpoint = ''
       if (this.searchBy === 'Service Name') {
-        //endpoint = `services/search/?name=${this.name}&searchBy=name`
         console.log(this.list)
+        //makes list that has name of service that user wants by using the original one as the source
         this.list = this.originalList.serviceList.filter(obj => obj.name.includes(this.name));
         console.log(this.list)
-        //this.serviceList = this.serviceList.filter((dict) => dict.id !== index);
       } else if (this.searchBy === 'Service Status') {
+        //makes list that has name of service that user wants by using the original one as the source
         this.list = this.originalList.serviceList.filter(obj => obj.status.includes(this.status));
         console.log(this.list)
       }
@@ -54,6 +54,7 @@ export default {
       this.getServices()
     },
     editService(servicesID) {
+      //when list item is clicked, it routes user to the edit page with its ID
       this.$router.push({ name: 'servicedetails', params: { id: servicesID } })
     }
   }
@@ -148,6 +149,7 @@ export default {
               <th class="p-6 text-left">Description</th>
             </tr>
           </thead>
+          <!-- a loop that iterates over imported service list and allows to click them to edit them-->
           <tbody class="divide-y divide-gray-300">
             <tr
               @click="editService(serviceObject.id)"

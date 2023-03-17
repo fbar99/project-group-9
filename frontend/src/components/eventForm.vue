@@ -234,6 +234,7 @@ export default {
                 <span class="ml-2">Early Childhood Education</span>
               </label>
             </div>
+            <!-- checkbox inputs are created by a loop that loads the services in the list and conditionally render if they're active-->
             <div>
               <label v-for="serviceObject in list.serviceList" :key="serviceObject.id">
               <input v-if="serviceObject.status == 'Active' || serviceObject.status == 'active'" type="checkbox" :value="serviceObject.name" v-model="event.services"
