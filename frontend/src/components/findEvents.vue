@@ -15,6 +15,7 @@ export default {
   },
   mounted() {
     this.getEvents()
+    console.log(this.events);
   },
   methods: {
     // better formattedDate
@@ -41,6 +42,7 @@ export default {
     getEvents() {
       axios.get(`${apiURL}/events`).then((res) => {
         this.events = res.data
+        console.log(res.data)
       })
       window.scrollTo(0, 0)
     },

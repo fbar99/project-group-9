@@ -50,7 +50,27 @@ export default {
                   class="material-icons"
                   >login</span
                 >
-                Test
+                add
+              </router-link>
+            </li>
+            <li>
+              <router-link to="" v-on:click="list.edit('3','michael','Not Active','test')">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >login</span
+                >
+                edit
+              </router-link>
+            </li>
+            <li>
+              <router-link to="" v-on:click="list.delete(3)">
+                <span
+                  style="position: relative; top: 6px"
+                  class="material-icons"
+                  >login</span
+                >
+                delete
               </router-link>
             </li>
             <li v-if="user.isLoggedIn">

@@ -1,16 +1,21 @@
 <script>
 import axios from 'axios'
 const apiURL = import.meta.env.VITE_ROOT_API
+import { useServiceListStore } from "@/store/serviceStore";
 
 export default {
   data() {
+    const originalList = useServiceListStore();
+    const list = originalList;
     return {
       queryData: [],
       // Parameter for search to occur
       searchBy: '',
       name: '',
       status: '',
-      services: []
+      services: [],
+      originalList,
+      list
     }
   },
   created() {
@@ -20,9 +25,14 @@ export default {
     handleSubmitForm() {
       let endpoint = ''
       if (this.searchBy === 'Service Name') {
-        endpoint = `services/search/?name=${this.name}&searchBy=name`
+        //endpoint = `services/search/?name=${this.name}&searchBy=name`
+        console.log(this.list)
+        this.list = this.originalList.serviceList.filter(obj => obj.name.includes(this.name));
+        console.log(this.list)
+        //this.serviceList = this.serviceList.filter((dict) => dict.id !== index);
       } else if (this.searchBy === 'Service Status') {
-        endpoint = `services/search/?status=${this.status}&searchBy=name`
+        this.list = this.originalList.serviceList.filter(obj => obj.status.includes(this.status));
+        console.log(this.list)
       }
       axios.get(`${apiURL}/${endpoint}`).then((res) => {
         this.queryData = res.data
@@ -30,9 +40,7 @@ export default {
     },
     // abstract get service call
     getServices() {
-      axios.get(`${apiURL}/services`).then((res) => {
-        this.queryData = res.data
-      })
+      this.list = this.originalList
       window.scrollTo(0, 0)
     },
     clearSearch() {
@@ -135,21 +143,25 @@ export default {
         <table class="min-w-full shadow-md rounded">
           <thead class="bg-gray-50 text-xl">
             <tr>
-              <th class="p-4 text-left">Name</th>
-              <th class="p-4 text-left">Status</th>
+              <th class="p-6 text-left">Name</th>
+              <th class="p-6 text-left">Status</th>
+              <th class="p-6 text-left">Description</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-300">
             <tr
-              @click="editService(services._id)"
-              v-for="service in queryData"
-              :key="services._id"
+              @click="editService(serviceObject._id)"
+              v-for="serviceObject in list.serviceList"
+              :key="serviceObject.id"
             >
               <td class="p-2 text-left">
-                {{ services.name }}
+                {{ serviceObject.name }}
               </td>
               <td class="p-2 text-left">
-                {{ services.status }}
+                {{ serviceObject.status }}
+              </td>
+              <td class="p-2 text-left">
+                {{ serviceObject.description }}
               </td>
             </tr>
           </tbody>

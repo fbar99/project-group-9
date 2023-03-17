@@ -44,13 +44,15 @@ export const useServiceListStore= defineStore({
     },
      edit(id, name, status, description) {
       try {
-        const index = this.serviceList.findIndex((dict) => dict.id === id);
+        const index = this.serviceList.findIndex((dict) => dict.id == id);
+        console.log(index)
 
         if (index !== -1) {
           this.serviceList[index].name = name;
           this.serviceList[index].status = status;
           this.serviceList[index].description = description;
         }
+        console.log(this.serviceList[index].name)
 
         this.$patch()
 
@@ -63,8 +65,11 @@ export const useServiceListStore= defineStore({
     },
      delete(id) {
       try {
-        const index = this.serviceList.findIndex((dict) => dict.id === id);
-        this.serviceList = this.serviceList.filter((dict) => dict.id !== index);
+        //const index = this.serviceList.findIndex((dict) => dict.id == id);
+        //console.log(index)
+        this.serviceList = this.serviceList.filter((dict) => dict.id !== id);
+        this.$patch()
+        console.log(this.serviceList)
         alert('Service deleted successfully.')
         this.$router.push("/");
       } catch(error) {
