@@ -60,7 +60,7 @@ export default {
                   class="material-icons"
                   >login</span
                 >
-                User Log-In <!-- Sign In Tab -->
+                User Log-In <!-- User Sign In Tab -->
               </router-link>
             </li>
             <li>
