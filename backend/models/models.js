@@ -1,6 +1,7 @@
 const uuid = require('uuid')
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcrypt');
 
 // collection for org
 const orgDataSchema = new Schema(
@@ -163,16 +164,21 @@ const userDataSchema = new Schema(
     _id: { type: String, default: uuid.v1 },
     email: {
       type: String,
-      required: true
+      required: true,
+      unique: true
     },
     passwordHash: {
-      type: Boolean,
+      type: String,
       required: true
     },
-    orgs: {
-      type: [{ type: String, ref: 'org' }],
+    role: {
+      type: String,
+      required: true
+    },
+    org: {
+      type: String, 
+      ref: 'org' ,
       required: true,
-      validate: [(org) => org.length > 0, 'needs at least one org']
     }
   },
   {
@@ -180,6 +186,16 @@ const userDataSchema = new Schema(
     timestamps: true
   }
 )
+
+// hash the password
+userDataSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+userDataSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.passwordHash);
+};
 
 // create models from mongoose schemas
 const clients = mongoose.model('client', clientDataSchema)

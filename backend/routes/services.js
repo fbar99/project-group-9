@@ -4,7 +4,7 @@ const router = express.Router()
 const org = process.env.ORG
 
 // importing data model schemas
-const { services } = require('../models/services')
+const { services } = require('../models/models')
 
 // GET entries based on search query
 router.get('/search/services', (req, res, next) => {
