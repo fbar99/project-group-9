@@ -6,6 +6,34 @@ const org = process.env.ORG
 // importing data model schemas
 const { services } = require('../models/models')
 
+//GET all services 
+router.get('/', (req, res, next) => {
+  services
+    .find({ orgs: org }, (error, data) => {
+      if (error) {
+        return next(error)
+      } else {
+        return res.json(data)
+      }
+    })
+    .sort({ updatedAt: -1 })
+})
+
+//GET 10 most recent services
+router.get('/', (req, res, next) => {
+  const org = req.user.org;
+  services
+    .find({ org: org, active: true }, (error, data) => {
+      if (error) {
+        return next(error);
+      } else {
+        res.json(data);
+      }
+    })
+    .sort({ updatedAt: -1 })
+    .limit(10);
+});
+
 // GET entries based on search query
 router.get('/search/services', (req, res, next) => {
     const dbQuery = { orgs: org }
