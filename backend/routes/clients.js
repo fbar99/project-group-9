@@ -20,6 +20,26 @@ router.get('/', (req, res, next) => {
     .limit(10)
 })
 
+// GET clients by zip code
+router.get('/clientsByZipCode', (req, res, next) => {
+  //creates a pipeline with aggregation logic by grouping zip codes and counting
+  //the records that have those zip codes
+  const pipeline = [
+    { $group: { _id: "$address.zip", count: { $sum: 1 } } },
+    { $project: { _id: 0, zip: "$_id", count: 1 } },
+    { $limit: 10 }
+  ];
+  //aggregation is built with the pipeline variable
+  clients.aggregate(pipeline).exec((err, clients) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send('Server Error');
+    } else {
+      res.send(clients);
+    }
+  });
+})
+
 // GET single client by ID
 router.get('/id/:id', (req, res, next) => {
   // use findOne instead of find to not return array
