@@ -10,22 +10,28 @@ export const useServiceListStore= defineStore({
       id: 1,
       name: "Test1 - dynamically loaded",
       status: "Active",
-      description: "My description"
+      description: "My description one"
     }
     const second = {
       id: 2,
       name: "Test2 - dynamically loaded",
       status: "Active",
-      description: "My description"
+      description: "My description two"
     }
     const third = {
       id: 3,
       name: "Test3 - dynamically loaded",
       status: "Active",
-      description: "My description"
+      description: "My description three" 
+    }
+    const fourth = {
+      id: 4,
+      name: "Test4 - dynamically loaded",
+      status: "Not Active",
+      description: "My description four"
     }
     return {
-      serviceList: [first,second,third],
+      serviceList: [first,second,third,fourth],
       idIndex: 4
     }
   },

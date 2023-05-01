@@ -59,12 +59,12 @@ export default {
     <h1
       class="font-bold text-4xl text-red-700 tracking-widest text-center mt-10"
     >
-      Welcome!
+      Welcome Back!
     </h1>
     <h3
       class="text-2xl text-red-700 tracking-widest text-center"
     >
-    Sign-In 
+    Please Sign-In 
     </h3>
     <br>
     <div class="container">
@@ -109,9 +109,11 @@ export default {
             <button class="bg-red-700 text-white rounded" type="submit">
               Login
             </button>
-          <p>Editor account: editor@gmail.com</p>
-          <p>Viewer account: viewer@gmail.com</p>
-          <p>Password for both: default</p>
+          <!-- login credentials -->
+          <p><br></p>
+          <p>Editor account: <strong>editor@gmail.com</strong></p>
+          <p>Viewer account: <strong>viewer@gmail.com</strong></p>
+          <p>Password for both accounts: <strong>default</strong></p>
         </form>
     </div>
   </main>
