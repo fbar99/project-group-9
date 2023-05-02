@@ -6,24 +6,11 @@ const org = process.env.ORG
 // importing data model schemas
 const { services } = require('../models/models')
 
-//GET all services 
-router.get('/', (req, res, next) => {
-  services
-    .find({ orgs: org }, (error, data) => {
-      if (error) {
-        return next(error)
-      } else {
-        return res.json(data)
-      }
-    })
-    .sort({ updatedAt: -1 })
-})
-
 //GET 10 most recent services
 router.get('/', (req, res, next) => {
   const org = req.user.org;
   services
-    .find({ org: org, active: true }, (error, data) => {
+    .find({ org: org }, (error, data) => {
       if (error) {
         return next(error);
       } else {
@@ -34,9 +21,23 @@ router.get('/', (req, res, next) => {
     .limit(10);
 });
 
+// GET single service by ID
+router.get('/id/:id', (req, res, next) => {
+  // use findOne instead of find to not return array
+  services.findOne({ _id: req.params.id, orgs: org }, (error, data) => {
+    if (error) {
+      return next(error)
+    } else if (!data) {
+      res.status(400).send('Service not found')
+    } else {
+      res.json(data)
+    }
+  })
+})
+
 // GET entries based on search query
 router.get('/search/services', (req, res, next) => {
-    const dbQuery = { orgs: org }
+    const dbQuery = { org: org }
     switch (req.query.searchBy) {
       case 'name':
         dbQuery.name = { $regex: `^${req.query.name}`, $options: 'i' }
@@ -57,7 +58,7 @@ router.get('/search/services', (req, res, next) => {
   // POST new service
 router.post('/', (req, res, next) => {
     const newService = req.body
-    newService.org = [org]
+    newService.org = org
     services.create(newService, (error, data) => {
       if (error) {
         return next(error)
